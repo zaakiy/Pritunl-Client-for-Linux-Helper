@@ -4,7 +4,7 @@
 Designed especially for Linux users with no time on their hands, this is a beautiful front-end UI to speed up the task of connecting and disconnecting from  Pritunl VPN endpoints
 
 ## What I hope for it to achieve.
-Pritunl are welcome to incorporate this script into the tool. If you do, please submit and issue so that other users can be informed. 
+Pritunl Inc are welcome to incorporate this script into the tool. If you do, please submit and issue so that other users can be informed. 
 
 ## Why was it created
 I created this script because the GUI Pritunl client is not yet supported on Ubuntu 24.04 at the time.
