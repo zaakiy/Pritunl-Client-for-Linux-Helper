@@ -14,9 +14,15 @@ It also helps because  I find my internet connection being terrible after being 
 
 I like my colors!
 
-# Pre-requisites
+# The technical bits
+
+## Pre-requisites
 You need to have `pritunl-client` installed: https://docs.pritunl.com/docs/command-line-interface
 
+## How to run it
+```shell
+./pritunl.sh
+```
 
 ## Screenshots
 
