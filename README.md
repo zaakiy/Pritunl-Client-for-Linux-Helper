@@ -33,9 +33,12 @@ You can either add the `tar` file or the `ovpn` file.
 ```shell
 ./pritunl.sh
 ```
+ 
+ 
+ 
+  
 
-
-
+ 
 ## Screenshots
 
 ![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/3ea770eb-69a8-481b-b8d4-a3ea257698e4)
