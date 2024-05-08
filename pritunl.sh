@@ -125,13 +125,15 @@ connect() {
 	echo ""
 
 	profileId=$(pritunl-client list | grep -e '^| '$profile | awk '{print $2}')
+	profileIdToConnect="${profileId}" # This is because the profileId variable was being modified to be the most recently disconnected profileId
 	if [[ -n $profileId ]]; then
 
 		disconnect
 		echo ""
-		echoColored $greentextcolor $boldtext "Connecting to ${profileId}..."
+		echoColored $greentextcolor $boldtext "Connecting to ${profileIdToConnect}..."
 		echo ""
-		pritunl-client start $profileId -r
+		pritunl-client start $profileIdToConnect -r
+		profileId=${profileIdToConnect}
 	fi
 
 }
@@ -139,6 +141,7 @@ connect() {
 main() {
 	key=""
 	selectedKey=""
+	profileId=""
 
 	clear
 
