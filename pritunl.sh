@@ -75,7 +75,66 @@ display_prompt_and_read_input() {
   done
 }
 
+get_active_connections() {
+	pritunl-client list | grep 'Active' | awk '{print substr($2, 1, 1)}'
+}
 
+disconnect() {
+	# echo "debug running disconnect for $active_ids_first_chars" && sleep 2
+	clear
+	echoColored "Disconnecting..."
+	# Disconnect from the VPN
+	active_ids_first_chars=$(get_active_connections)
+	for char in $active_ids_first_chars; do
+		profileId=""
+		profileId=$(pritunl-client list | grep '| '$char | grep -e Active | awk '{print $2}')
+		# echo "debug $profileId needs to be disconnected" && sleep 2
+		if [[ -n $profileId ]]; then
+			echo ""
+			echoColored $greentextcolor $boldtext "Disconnecting from $profileId"
+			echo "pritunl-client stop $profileId"
+			pritunl-client stop $profileId
+			echo ""
+			show_connections_highlight_selected
+			# echo debug 3 $profileId
+			sleep 2
+		fi
+		sleep 2
+	done
+
+}
+
+connect() {
+	# echo "debug running connect" && sleep 2
+	clear
+	show_connections
+	echo ""
+	echoColored "${greentextcolor}${boldtext}Choose which profile you wish to connect to:"
+	echo ""
+	inactive_ids_first_chars=$(pritunl-client list | grep 'Inactive' | awk '{print substr($2, 1, 1)}')
+	IFS=$'\n'   # Set the Internal Field Separator to newline to handle multi-line input
+	for char in $inactive_ids_first_chars; do
+		profileId=$(pritunl-client list | grep -e '^| '$char | awk '{print $2}')
+		remainingCharacters="${profileId:1}"
+		echoColored "${greentextcolor}${boldtext}    Press [${redtextcolor}$char${greentextcolor}] to connect to profile ${redtextcolor}$char${greentextcolor}${remainingCharacters}."
+	done
+	echo ""
+	echoColored "${greentextcolor}${boldtext}      ...or any other key to go to the main menu."
+	read -n 1 profile
+
+	echo ""
+
+	profileId=$(pritunl-client list | grep -e '^| '$profile | awk '{print $2}')
+	if [[ -n $profileId ]]; then
+
+		disconnect
+		echo ""
+		echoColored $greentextcolor $boldtext "Connecting to ${profileId}..."
+		echo ""
+		pritunl-client start $profileId -r
+	fi
+
+}
 
 main() {
 	key=""
@@ -102,72 +161,39 @@ main() {
 	# Set the connect and disconnect variables
 	if [[ $selectedKey == "c" ]]; then
 		connect=true
+	else
+		# Important to reset the value for the next loop of main()
+		connect=false
 	fi
 
 	if [[ $selectedKey == "d" ]]; then
 		disconnect=true
+	else
+		# Important to reset the value for the next loop of main()
+		disconnect=false
 	fi
 
 
 	if [[ $disconnect == true ]]; then
-		clear
-		echoColored "Disconnecting..."
-		# Disconnect from the VPN
-		active_ids_first_chars=$(pritunl-client list | grep 'Active' | awk '{print substr($2, 1, 1)}')
+		active_ids_first_chars="" #important to reset because main will loop again
+
+		# echo "debug disconnect is true" && sleep 2
+		active_ids_first_chars=$(get_active_connections)
 		if [ -z $active_ids_first_chars ]; then
+			clear
 			show_connections
 			echo ""
 			echoColored "${redtextcolor}There are already no Active connections."
-			sleep 3
+			sleep 2
 			break
+		else
+			disconnect
 		fi
-		for char in $active_ids_first_chars; do
-			profileId=""
-			profileId=$(pritunl-client list | grep '| '$char | grep -e Active | awk '{print $2}')
-			if [[ $profileId ]]; then
-				echo ""
-				echoColored $greentextcolor $boldtext "Disconnecting from $profileId"
-				echo "pritunl-client stop $profileId"
-				pritunl-client stop $profileId
-				echo ""
-				show_connections_highlight_selected
-				sleep 2
-			fi
-		done
-
-		show_connections
 	fi
 
 	if [[ $connect == true ]]; then
-		clear
-		show_connections
-		echo ""
-		echoColored "${greentextcolor}${boldtext}Choose which profile you wish to connect to:"
-		echo ""
-		inactive_ids_first_chars=$(pritunl-client list | grep 'Inactive' | awk '{print substr($2, 1, 1)}')
-		IFS=$'\n'   # Set the Internal Field Separator to newline to handle multi-line input
-		for char in $inactive_ids_first_chars; do
-			profileId=$(pritunl-client list | grep -e '^| '$char | awk '{print $2}')
-			remainingCharacters="${profileId:1}"
-			echoColored "${greentextcolor}${boldtext}    Press [${redtextcolor}$char${greentextcolor}] to connect to profile ${redtextcolor}$char${greentextcolor}${remainingCharacters}."
-		done
-		echo ""
-		echoColored "${greentextcolor}${boldtext}      ...or any other key to abort."
-		read -n 1 profile
-
-		echo ""
-
-		profileId=$(pritunl-client list | grep -e '^| '$profile | awk '{print $2}')
-		
-		echo ""
-		echoColored $greentextcolor $boldtext "Connecting to ${profileId}..."
-		echo ""
-		pritunl-client start $profileId -r
-
-		show_connections_highlight_selected
-		sleep 2
-		
-
+		# echo "debug connect is true" && sleep 2
+		connect
 	fi
 
 }
