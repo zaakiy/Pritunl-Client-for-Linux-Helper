@@ -47,8 +47,8 @@ show_connections_highlight_selected() {
 }
 
 
-show_connections_3times() {
-	for ((i = 1; i <= 3; i++)); do
+show_connections_4times() {
+	for ((i = 1; i <= 4; i++)); do
 		clear
 		show_connections
 		sleep 2
@@ -56,8 +56,8 @@ show_connections_3times() {
 }
 
 
-show_connections_3times_highlight_selected() {
-	for ((i = 1; i <= 3; i++)); do
+show_connections_4times_highlight_selected() {
+	for ((i = 1; i <= 4; i++)); do
 		clear
 		show_connections_highlight_selected
 		sleep 2
@@ -145,7 +145,7 @@ main() {
 		echo ""
 		pritunl-client start $profileId -r
 
-		show_connections_3times_highlight_selected
+		show_connections_4times_highlight_selected
 		
 
 	fi
