@@ -47,22 +47,6 @@ show_connections_highlight_selected() {
 }
 
 
-show_connections_4times() {
-	for ((i = 1; i <= 4; i++)); do
-		clear
-		show_connections
-		sleep 2
-	done
-}
-
-
-show_connections_4times_highlight_selected() {
-	for ((i = 1; i <= 4; i++)); do
-		clear
-		show_connections_highlight_selected
-		sleep 2
-	done
-}
 
 user_prompt() {
 	clear
