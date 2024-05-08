@@ -12,6 +12,9 @@ I created this script because the GUI Pritunl client is not yet supported on Ubu
 ## Why I really like it
 It also helps because  I find my internet connection being terrible after being connected to 2 VPN servers at the same time. This script stops this behavior by disconnecting any existing sessions before establishing a new VPN session.
 
+I like my colors!
+
+
 
 ## Screenshots
 
