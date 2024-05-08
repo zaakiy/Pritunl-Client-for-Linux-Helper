@@ -11,3 +11,16 @@ I created this script because the GUI Pritunl client is not yet supported on Ubu
 
 ## Why I really like it
 It also helps because  I find my internet connection being terrible after being connected to 2 VPN servers at the same time. This script stops this behavior by disconnecting any existing sessions before establishing a new VPN session.
+
+
+## Screenshots
+
+![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/3ea770eb-69a8-481b-b8d4-a3ea257698e4)
+
+![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/b8bd9430-9c0d-4c9d-aa1f-d0532663c428)
+
+![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/eb9b9f41-8568-4fdb-ac5c-38a701a17d84)
+
+![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/6ea90c29-cc11-41f2-a95c-c7b8978b86a6)
+
+![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/598a6dda-2660-4b86-af74-67938c684163)
