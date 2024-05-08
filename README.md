@@ -19,10 +19,20 @@ I like my colors!
 ## Pre-requisites
 You need to have `pritunl-client` installed: https://docs.pritunl.com/docs/command-line-interface
 
-## How to run it
+You need to first run the `add` command to add your profiles that your admin has given you:
 ```shell
-./pritunl.sh
+
 ```
+
+## How to run it
+
+```shell
+pritunl-client add ./Downloads/zak.tar
+```
+
+You can either add the `tar` file or the `ovpn` file. 
+
+(Replace the file name with your own, of course!)
 
 ## Screenshots
 
