@@ -64,6 +64,35 @@ show_connections_4times_highlight_selected() {
 	done
 }
 
+user_prompt() {
+	clear
+	show_connections_highlight_selected
+	# Ask the user if they want to connect or disconnect
+	echo ""
+	echoColored "${greentextcolor}${boldtext}Press [${redtextcolor}c${greentextcolor}] to connect or press [${redtextcolor}d${greentextcolor}] to disconnect."
+	echo ""
+	echoColored "${greentextcolor}${boldtext}      ...or ${redtextcolor}any${greentextcolor} other key to exit."
+}
+
+key=""
+selectedKey=""
+display_prompt_and_read_input() {
+	user_prompt
+  while true; do
+
+    read -n 1 -t 2 -s key || true
+    if [ -z "$key" ]; then
+			user_prompt
+      continue
+    else
+			selectedKey=$key
+      break
+    fi
+  done
+}
+
+
+
 main() {
 	clear
 
