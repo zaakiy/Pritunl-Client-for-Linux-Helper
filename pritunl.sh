@@ -47,40 +47,52 @@ show_connections_highlight_selected() {
 }
 
 
-show_connections_4times() {
-	for ((i = 1; i <= 4; i++)); do
-		clear
-		show_connections
-		sleep 2
-	done
-}
 
-
-show_connections_4times_highlight_selected() {
-	for ((i = 1; i <= 4; i++)); do
-		clear
-		show_connections_highlight_selected
-		sleep 2
-	done
-}
-
-main() {
+user_prompt() {
 	clear
-
-	# Show the status of all VPN connections
-	show_connections
-
+	show_connections_highlight_selected
 	# Ask the user if they want to connect or disconnect
 	echo ""
 	echoColored "${greentextcolor}${boldtext}Press [${redtextcolor}c${greentextcolor}] to connect or press [${redtextcolor}d${greentextcolor}] to disconnect."
 	echo ""
 	echoColored "${greentextcolor}${boldtext}      ...or ${redtextcolor}any${greentextcolor} other key to exit."
+}
+
+key=""
+selectedKey=""
+display_prompt_and_read_input() {
+	user_prompt
+  while true; do
+
+    read -n 1 -t 2 -s key || true
+    if [ -z "$key" ]; then
+			user_prompt
+      continue
+    else
+			selectedKey=$key
+      break
+    fi
+  done
+}
+
+
+
+main() {
+	key=""
+	selectedKey=""
+
+	clear
+
+	# Show the status of all VPN connections
+	show_connections
+
 
 	# Read the user's input
-	read -n 1 key
+	display_prompt_and_read_input
+
 
 	# Abort if any other key is pressed
-	if [[ $key != "c" && $key != "d" ]]; then
+	if [[ $selectedKey != "c" && $selectedKey != "d" ]]; then
 		echo ""
 		echoColored $redtextcolor $boldtext "Goodbye!"
 		echo ""
@@ -88,11 +100,11 @@ main() {
 	fi
 
 	# Set the connect and disconnect variables
-	if [[ $key == "c" ]]; then
+	if [[ $selectedKey == "c" ]]; then
 		connect=true
 	fi
 
-	if [[ $key == "d" ]]; then
+	if [[ $selectedKey == "d" ]]; then
 		disconnect=true
 	fi
 
@@ -102,6 +114,13 @@ main() {
 		echoColored "Disconnecting..."
 		# Disconnect from the VPN
 		active_ids_first_chars=$(pritunl-client list | grep 'Active' | awk '{print substr($2, 1, 1)}')
+		if [ -z $active_ids_first_chars ]; then
+			show_connections
+			echo ""
+			echoColored "${redtextcolor}There are already no Active connections."
+			sleep 3
+			break
+		fi
 		for char in $active_ids_first_chars; do
 			profileId=""
 			profileId=$(pritunl-client list | grep '| '$char | grep -e Active | awk '{print $2}')
@@ -145,7 +164,8 @@ main() {
 		echo ""
 		pritunl-client start $profileId -r
 
-		show_connections_4times_highlight_selected
+		show_connections_highlight_selected
+		sleep 2
 		
 
 	fi
