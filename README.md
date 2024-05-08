@@ -1,20 +1,31 @@
 # Pritunl Client for Linux - Helper
 
+<br>
+
 ## What is it.
 Designed especially for Linux users with no time on their hands, this is a beautiful front-end UI to speed up the task of connecting and disconnecting from  Pritunl VPN endpoints
+
+<br>
 
 ## What I hope for it to achieve.
 Pritunl Inc are welcome to incorporate this script into the tool. If you do, please submit an issue so that other users can be informed. 
 
+<br>
+
 ## Why was it created
 I created this script because the GUI Pritunl client is not yet supported on Ubuntu 24.04 at the time.
+
+<br>
 
 ## Why I really like it
 It also helps because  I find my internet connection being terrible after being connected to 2 VPN servers at the same time. This script stops this behavior by disconnecting any existing sessions before establishing a new VPN session.
 
 I like my colors!
 
+<br><br>
 # The technical bits
+
+<br>
 
 ## Pre-requisites
 You need to have `pritunl-client` installed: https://docs.pritunl.com/docs/command-line-interface
@@ -28,17 +39,17 @@ You can either add the `tar` file or the `ovpn` file.
 
 (Replace the file name with your own, of course!)
 
+<br>
+
 ## How to run it
 
 ```shell
 ./pritunl.sh
 ```
- 
- 
- 
-  
 
- 
+
+
+<br>
 ## Screenshots
 
 ![image](https://github.com/zaakiy/Pritunl-Client-for-Linux-Helper/assets/10609818/3ea770eb-69a8-481b-b8d4-a3ea257698e4)
